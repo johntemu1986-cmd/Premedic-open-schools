@@ -1,792 +1,356 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premedic Open School - Shule ya Elimu ya Kisasa</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>SHMSS Election System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+        
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f39c12;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --danger: #e74c3c;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --neon-cyan: #00f2ff;
+            --deep-obsidian: #05070a;
+            --panel-bg: rgba(16, 20, 25, 0.95);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .btn-hover {
-            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--deep-obsidian);
+            color: #a0aec0;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            min-height: 100vh;
+            margin: 0;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        .btn-hover:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar-custom {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 1rem 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: white !important;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .navbar-brand i {
-            margin-right: 0.5rem;
-        }
-
-        .nav-link {
-            color: white !important;
-            font-weight: 600;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -5px;
-            left: 50%;
-            background: var(--accent);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link:hover {
-            color: var(--accent) !important;
-        }
-
-        .btn-nav {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .btn-nav:hover {
-            background: var(--accent);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            top: -50px;
-            right: -50px;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            bottom: -50px;
-            left: -50px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            font-weight: 500;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary-custom {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary-custom:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            text-decoration: none;
-            color: white;
-        }
-
-        .btn-secondary-custom {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-            padding: 13px 38px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-secondary-custom:hover {
-            background: white;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .hero-image {
-            margin-top: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: slideInUp 0.8s ease;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* ===== SECTIONS ===== */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 1rem;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 3px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .bg-light-section {
-            background-color: #f8f9ff;
-        }
-
-        /* ===== CARDS ===== */
-        .card-custom {
-            background: white;
-            border: none;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-custom:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .card-custom h3 {
-            color: var(--dark);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card-custom p {
-            color: #666;
-            line-height: 1.8;
-            flex-grow: 1;
-        }
-
-        /* ===== TEACHERS ===== */
-        .teacher-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .teacher-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .teacher-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 4rem;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .teacher-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .teacher-image-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            font-size: 3rem;
-        }
-
-        .teacher-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .teacher-info h4 {
-            color: var(--dark);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .teacher-info p {
-            color: var(--primary);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .teacher-subject {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .teacher-social {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .teacher-social a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .teacher-social a:hover {
-            color: var(--secondary);
-            transform: scale(1.2);
-        }
-
-        /* ===== COURSES ===== */
-        .course-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .course-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .course-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .course-body {
-            padding: 2rem;
-            flex-grow: 1;
-        }
-
-        .course-body p {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .course-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .course-features li {
-            color: #666;
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .course-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .course-footer {
-            padding: 0 2rem 2rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-course {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .btn-course:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-            color: white;
-            text-decoration: none;
-        }
-
-        /* ===== STATS ===== */
-        .stats-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            top: -100px;
-            right: -100px;
-        }
-
-        .stats-section::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            bottom: -80px;
-            left: -80px;
-        }
-
-        .stat-item {
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* ===== FORMS ===== */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .form-control-custom {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: #fafafa;
-        }
-
-        .form-control-custom:focus {
-            border-color: var(--primary);
-            background-color: white;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-            outline: none;
-        }
-
-        .form-control-custom::placeholder {
-            color: #999;
-        }
-
-        .required {
-            color: var(--danger);
-        }
-
-        /* ===== REGISTER FORM ===== */
-        .register-container {
-            background: white;
-            border-radius: 15px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-        }
-
-        .form-row-custom {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .btn-register {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .btn-register:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0 20px;
-        }
-
-        .footer-section h5 {
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section ul li a {
-            color: #bbb;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #444;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            text-align: center;
-            color: #999;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            color: var(--accent);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            transform: scale(1.2);
-            color: white;
-        }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .animate-in {
-            animation: fadeIn 0.8s ease;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .form-row-custom {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn-primary-custom,
-            .btn-secondary-custom {
-                width: 100%;
-                text-align: center;
-            }
-
-            .stat-number {
-                font-size: 2.5rem;
-            }
-
-            .register-container {
-                padding: 2rem 1.5rem;
-            }
-        }
-
-        /* ===== ALERTS ===== */
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: none;
-        }
-
-        /* ===== BADGES ===== */
-        .badge-custom {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* ===== MODAL ===== */
-        .modal-custom {
-            display: none;
+        /* UPLOADED SCHOOL LOGO WATERMARK */
+        .watermark {
             position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            width: 500px;
+            height: 500px;
+            opacity: 0.08; 
+            pointer-events: none;
+            z-index: -1;
+            /* Using the uploaded school logo file */
+            background-image: url('shmss.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: brightness(1.5);
         }
 
-        .modal-content-custom {
-            background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        .cyber-border {
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            position: relative;
         }
 
-        .close-modal {
-            color: #999;
-            float: right;
-            font-size: 2rem;
+        .cyber-border::before {
+            content: "";
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 10px; height: 10px;
+            border-top: 2px solid var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+        }
+
+        .cyber-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: var(--neon-cyan);
+        }
+
+        .btn-cyber {
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-transform: uppercase;
             font-weight: bold;
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        .
+        .btn-cyber:hover:not(:disabled) {
+            background: var(--neon-cyan);
+            color: var(--deep-obsidian);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid #dc2626;
+            color: #ff4d4d;
+        }
+
+        .admin-trigger {
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="flex flex-col p-4 md:p-8">
+
+    <!-- WATERMARK IMAGE -->
+    <div class="watermark"></div>
+
+    <header class="container mx-auto max-w-5xl mb-8 flex justify-between items-end border-b border-cyan-900/50 pb-6">
+        <div>
+            <!-- ADMIN TRIGGER: CLICK "SHMSS" -->
+            <h1 id="admin-lock" onclick="openAdmin()" class="admin-trigger text-4xl font-bold text-white tracking-tighter uppercase hover:text-cyan-400">SHMSS</h1>
+            <p class="text-cyan-500 text-[10px] font-bold tracking-[0.4em] uppercase">Verified Institution</p>
+        </div>
+        <div class="text-xs text-cyan-400 font-mono" id="system-time">LOADING...</div>
+    </header>
+
+    <main class="container mx-auto max-w-5xl">
+        
+        <!-- Login Section -->
+        <div id="login-section" class="cyber-panel cyber-border p-8 md:p-12 max-w-lg mx-auto">
+            <div class="mb-8 text-center">
+                <h2 class="text-xl font-bold text-white uppercase tracking-widest">Voter Login</h2>
+                <p id="range-hint" class="text-[10px] text-gray-500 uppercase mt-1"></p>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-[10px] font-bold text-cyan-700 uppercase mb-2 tracking-widest text-center">ID Verification</label>
+                    <input type="text" id="voter-id-input" placeholder="SHMSS-2024-001" 
+                           class="cyber-input w-full p-4 font-mono text-center text-lg uppercase tracking-widest outline-none focus:border-cyan-400">
+                    
+                    <div id="auth-error-msg" class="hidden warning-box mt-4 p-4 text-[12px] font-bold text-center uppercase leading-tight">
+                    </div>
+                </div>
+                <button onclick="startVoting()" class="btn-cyber w-full py-4 tracking-widest">Verify ID</button>
+            </div>
+        </div>
+
+        <!-- Voting Section -->
+        <div id="voting-section" class="hidden space-y-8">
+            <div class="flex items-center justify-between bg-cyan-950/20 p-4 border-l-4 border-cyan-500">
+                <div class="font-mono text-xs text-cyan-100" id="active-user-display"></div>
+                <div class="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">Encrypted Session</div>
+            </div>
+            
+            <div id="ballot-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            
+            <button onclick="submitBallot()" class="btn-cyber w-full py-6 text-xl mt-8 tracking-widest">Finalize Selection</button>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="admin-section" class="hidden space-y-6">
+            <div class="flex justify-between items-center border-b border-cyan-500/30 pb-4">
+                <h2 class="text-2xl font-bold text-white uppercase tracking-tighter">Election Dashboard</h2>
+                <div class="flex gap-2">
+                    <button onclick="clearVotes()" class="btn-cyber px-4 py-2 text-[10px] border-red-600 text-red-500">Reset System</button>
+                    <button onclick="location.reload()" class="btn-cyber px-4 py-2 text-[10px]">Logout</button>
+                </div>
+            </div>
+            <div id="admin-live-counts" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></div>
+            <div id="admin-breakdown" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+    </main>
+
+    <script>
+        const CONFIG = { 
+            TOTAL_STUDENTS: 500, 
+            YEAR: "2024",
+            ADMIN_KEY: "ayla" 
+        };
+
+        const categories = [
+            { id: 'head', title: 'Head Prefect', candidates: ["FURAHA", "ADHEEN", "LEILA", "ABOUBAKAR"] },
+            { id: 'deputy', title: 'Deputy Prefect', candidates: ["ABRIELLE", "YONA", "RANIA", "TANISH"] },
+            { id: 'secretary', title: 'Secretary Prefect', candidates: ["ARIANNAH", "AHMED", "TWAHIBA", "FAHD"] },
+            { id: 'acad', title: 'Academic Prefect', candidates: ["LINCOLN", "GISHA", "LANTA-LILIAN", "MICHELLE"], dual: true },
+            { id: 'disc', title: 'Discipline Prefect', candidates: ["ABDULKIZA", "ABDULRASUL", "ZAITUNI", "AKLAM"], dual: true },
+            { id: 'sport', title: 'Sports Prefect', candidates: ["THABIT", "PRINCE", "WENDE", "SHAAFA"], dual: true },
+            { id: 'env', title: 'Environmental Prefect', candidates: ["GABRIEL", "YUSUPH", "AMINA", "MOZA"], dual: true },
+            { id: 'anti', title: 'Anti-Bully Prefect', candidates: ["ANMAR", "KHAMIS", "ABIGAIL", "PRECIOUS"], dual: true }
+        ];
+
+        let selections = {};
+        let currentVoterId = "";
+
+        window.onload = () => {
+            document.getElementById('range-hint').innerText = `Valid Range: SHMSS-${CONFIG.YEAR}-001 to ${CONFIG.TOTAL_STUDENTS}`;
+        };
+
+        function showError(msg) {
+            const errorBox = document.getElementById('auth-error-msg');
+            errorBox.innerHTML = msg;
+            errorBox.classList.remove('hidden');
+        }
+
+        function startVoting() {
+            const input = document.getElementById('voter-id-input');
+            const id = input.value.trim().toUpperCase();
+            const errorBox = document.getElementById('auth-error-msg');
+            errorBox.classList.add('hidden');
+            
+            if (id === CONFIG.ADMIN_KEY.toUpperCase()) {
+                openAdmin();
+                return;
+            }
+
+            // REPETITION CHECK (CRITICAL FIX)
+            const alreadyVotedList = JSON.parse(localStorage.getItem('shmss_voted_ids') || '[]');
+            
+            if (alreadyVotedList.includes(id)) {
+                input.value = "";
+                showError("🚨 ACCESS DENIED: ID " + id + " HAS ALREADY BEEN USED.");
+                return;
+            }
+
+            // Format Validation
+            const regex = new RegExp(`^SHMSS-${CONFIG.YEAR}-\\d{3}$`);
+            if (!regex.test(id)) {
+                showError("❌ FORMAT ERROR<br><span class='text-[10px]'>ID MUST BE: SHMSS-2024-###</span>");
+                return;
+            }
+
+            // Range Check
+            const num = parseInt(id.split('-')[2]);
+            if (num < 1 || num > CONFIG.TOTAL_STUDENTS) {
+                showError("❌ UNREGISTERED ID NUMBER");
+                return;
+            }
+
+            currentVoterId = id;
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('voting-section').classList.remove('hidden');
+            document.getElementById('active-user-display').innerText = `SESSION: ${id}`;
+            renderBallot();
+            window.scrollTo(0,0);
+        }
+
+        function renderBallot() {
+            const container = document.getElementById('ballot-container');
+            container.innerHTML = categories.map(cat => {
+                if (!cat.dual) {
+                    return `
+                        <div class="cyber-panel cyber-border p-6">
+                            <h3 class="text-white text-xs font-bold uppercase mb-4 border-b border-cyan-900 pb-2">${cat.title}</h3>
+                            <select onchange="selections['${cat.id}']=this.value" class="cyber-input w-full p-3 text-xs uppercase outline-none focus:border-white">
+                                <option value="">-- CHOOSE CANDIDATE --</option>
+                                ${cat.candidates.map(c => `<option value="${c}">${c}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                } else {
+                    const half = Math.ceil(cat.candidates.length / 2);
+                    const males = cat.candidates.slice(0, half);
+                    const females = cat.candidates.slice(half);
+                    return `
+                        <div class="cyber-panel cyber-border p-6">
+                            <h3 class="text-white text-xs font-bold uppercase mb-4 border-b border-cyan-900 pb-2">${cat.title}</h3>
+                            <div class="space-y-3">
+                                <select onchange="selections['${cat.id}_m']=this.value" class="cyber-input w-full p-2 text-[10px] uppercase outline-none">
+                                    <option value="">-- MALE CANDIDATE --</option>
+                                    ${males.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                </select>
+                                <select onchange="selections['${cat.id}_f']=this.value" class="cyber-input w-full p-2 text-[10px] uppercase outline-none">
+                                    <option value="">-- FEMALE CANDIDATE --</option>
+                                    ${females.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function submitBallot() {
+            const alreadyVotedList = JSON.parse(localStorage.getItem('shmss_voted_ids') || '[]');
+            if (alreadyVotedList.includes(currentVoterId)) {
+                alert("Security breach detected: ID already used.");
+                location.reload();
+                return;
+            }
+
+            const expectedCount = categories.reduce((acc, cat) => acc + (cat.dual ? 2 : 1), 0);
+            if (Object.keys(selections).length < expectedCount) {
+                return alert("ERROR: You must vote for every category.");
+            }
+
+            let votes = JSON.parse(localStorage.getItem('shmss_vote_counts')) || {};
+            Object.values(selections).forEach(name => {
+                votes[name] = (votes[name] || 0) + 1;
+            });
+            localStorage.setItem('shmss_vote_counts', JSON.stringify(votes));
+
+            alreadyVotedList.push(currentVoterId);
+            localStorage.setItem('shmss_voted_ids', JSON.stringify(alreadyVotedList));
+
+            alert("VOTE SUBMITTED. THANK YOU.");
+            location.reload();
+        }
+
+        function openAdmin() {
+            const pass = prompt("ADMIN AUTHORIZATION:");
+            if (pass === CONFIG.ADMIN_KEY) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('voting-section').classList.add('hidden');
+                document.getElementById('admin-section').classList.remove('hidden');
+                updateAdminPanel();
+            } else if (pass !== null) {
+                alert("INVALID ACCESS KEY");
+            }
+        }
+
+        function updateAdminPanel() {
+            const votes = JSON.parse(localStorage.getItem('shmss_vote_counts')) || {};
+            const registry = JSON.parse(localStorage.getItem('shmss_voted_ids') || '[]');
+            const turnout = registry.length;
+            
+            document.getElementById('admin-live-counts').innerHTML = `
+                <div class="cyber-panel p-4 border border-cyan-800">
+                    <p class="text-[9px] uppercase font-bold text-cyan-600">Total Votes Cast</p>
+                    <p class="text-2xl font-bold text-white">${turnout}</p>
+                </div>
+                <div class="cyber-panel p-4 border border-cyan-800">
+                    <p class="text-[9px] uppercase font-bold text-cyan-600">Turnout %</p>
+                    <p class="text-2xl font-bold text-white">${((turnout/CONFIG.TOTAL_STUDENTS)*100).toFixed(1)}%</p>
+                </div>
+            `;
+
+            document.getElementById('admin-breakdown').innerHTML = categories.map(cat => {
+                const tallies = cat.candidates.map(c => `
+                    <div class="flex justify-between text-[11px] py-1 border-b border-cyan-900/30">
+                        <span>${c}</span><span class="text-cyan-400 font-bold">${votes[c] || 0}</span>
+                    </div>
+                `).join('');
+                return `<div class="cyber-panel cyber-border p-4">
+                    <h4 class="text-white text-[10px] font-bold uppercase mb-2">${cat.title}</h4>
+                    ${tallies}
+                </div>`;
+            }).join('');
+        }
+
+        function clearVotes() {
+            if(confirm("DANGER: WIPE ALL ELECTION DATA?")) {
+                localStorage.removeItem('shmss_vote_counts');
+                localStorage.removeItem('shmss_voted_ids');
+                location.reload();
+            }
+        }
+
+        setInterval(() => {
+            const el = document.getElementById('system-time');
+            if (el) el.innerText = `SYS_SYNC: ${new Date().toLocaleTimeString()}`;
+        }, 1000);
+    </script>
+</body>
+</html>
